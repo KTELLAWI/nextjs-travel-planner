@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = "DATABASE_URL='mysql://c5b72u0u85v157xk999r:main-2024-02-20-mmtlf7@aws.connect.psdb.cloud/bookingapppwithscraping?sslaccept=strict'"
+  provider = "postgresql"
+  url      = "postgres://scrapdata_user:Y7yA1ozwNGCo1kDZwG9DiutAYxxPXMdD@dpg-cnah15ev3ddc73da6slg-a.frankfurt-postgres.render.com/scrapdata"
 }
 
 
