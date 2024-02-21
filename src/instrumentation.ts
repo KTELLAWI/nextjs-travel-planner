@@ -4,7 +4,7 @@ import { startPackageScraping } from "./scraping/packageScraping";
 import { startFlightScraping } from "./scraping/flightsScraping";
 import { startHotelScraping } from "./scraping/hotelScraping";
 
-const SBR_WS_ENDPOINT = process.env.SBR_WS_ENDPOINT;
+// const SBR_WS_ENDPOINT = process.env.SBR_WS_ENDPOINT;
 
 export const register = async () => {
   //This if statement is important, read here: https://nextjs.org/docs/app/building-your-application/optimizing/instrumentation
