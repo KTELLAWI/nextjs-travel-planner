@@ -34,16 +34,17 @@ export const register = async () => {
       "importQueue",
       async (job) => {
         console.log(process.env);
-        console.log("Connecting to Scraping Browser...", SBR_WS_ENDPOINT);
-        const browser = await puppeteer.connect({
-          browserWSEndpoint: SBR_WS_ENDPOINT,
-        });
+        // console.log("Connecting to Scraping Browser...", SBR_WS_ENDPOINT);
+        // const browser = await puppeteer.connect({
+        //   browserWSEndpoint: SBR_WS_ENDPOINT,
+        // });
         console.log(job.data);
         // const browser = await puppeteer.launch({
         //   executablePath:
         //     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
         //   headless: false,
         // });
+        const browser = await puppeteer.launch();
         try {
           const page = await browser.newPage();
           if (job.data.jobType.type === "location") {
