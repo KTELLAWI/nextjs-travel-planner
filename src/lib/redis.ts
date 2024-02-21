@@ -3,8 +3,9 @@ import Redis from "ioredis";
 // You can get the REDIS_URL from your environment variables
 const REDIS_URL =
   process.env.REDIS_URL ||
-  "redis://localhost:rediss://aptible:dUd2V4fZjmBXqSPAfR8NTKb0uDCaIo7j@db-shared-us-east-1-wat-122849.aptible.in:29679";
+  "redis://default:5689ef16734042e5b9456919820c1134@eu1-just-jaguar-38734.upstash.io:38734";
 
 const connection = new Redis(REDIS_URL);
 
 export { connection };
+redis://default:5689ef16734042e5b9456919820c1134@eu1-just-jaguar-38734.upstash.io:38734
