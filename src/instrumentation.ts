@@ -44,7 +44,9 @@ export const register = async () => {
         //     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
         //   headless: false,
         // });
-        const browser = await puppeteer.launch();
+          const browser = await puppeteer.connect({
+    browserWSEndpoint: `wss://chrome.browserless.io?token=4bbbec53-6879-4db9-9df8-d104ddcc8b1c`,
+  });
         try {
           const page = await browser.newPage();
           if (job.data.jobType.type === "location") {
