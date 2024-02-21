@@ -8,4 +8,3 @@ const REDIS_URL =
 const connection = new Redis(REDIS_URL);
 
 export { connection };
-redis://default:5689ef16734042e5b9456919820c1134@eu1-just-jaguar-38734.upstash.io:38734
