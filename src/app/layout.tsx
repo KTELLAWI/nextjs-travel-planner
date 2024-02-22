@@ -23,8 +23,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <PageLayout>{children}</PageLayout>
-{/*           <AppProtector />
-        </Providers> */}
+{/*           <AppProtector /> /*}
+        </Providers> 
       </body>
     </html>
   );
