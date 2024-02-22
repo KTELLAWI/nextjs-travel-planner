@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://scrap_user:dOyoYmsBv7Pfyd028z9dWpELzzLZaclz@dpg-cnb873uct0pc738end30-a.oregon-postgres.render.com/scrap"
+  url      = "postgres://scrapdata_hs5k_user:ijTPdvfb9ae9ZrgMsbiMclldaab7JRuc@dpg-cnbh9rgcmk4c73agqee0-a.oregon-postgres.render.com/scrapdata_hs5k"
 }
 
 
