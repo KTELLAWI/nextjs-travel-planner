@@ -4,12 +4,14 @@ import prisma from "../../../../lib/prisma";
 // import { scrapingQueue } from "../../../temp/queue";
 
 import { importQueue } from "../../../../lib/queue";
+// import { apiClient } from "@/lib";
 
 export async function POST(request: Request) {
   try {
     const { url, jobType } = await request.json();
     const response = await prisma.jobs.create({ data: { url, jobType } });
-
+    
+ 
     await importQueue.add("new location", { url, jobType, id: response.id });
     return NextResponse.json(
       {
