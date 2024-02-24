@@ -2,7 +2,7 @@
 import React from "react";
 import { useDisclosure } from "@nextui-org/react";
 import { AuthModal } from "@/components/auth-modal";
-import { Footer } from "@/components/footer";
+// import { Footer } from "@/components/footer";
 // import { Navbar } from "@/components/navbar";
 import ScrapingLoader from "@/components/loaders/scraping-loader";
 import { useAppStore } from "@/store";
