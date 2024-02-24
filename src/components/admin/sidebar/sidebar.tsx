@@ -29,20 +29,20 @@ const Sidebar = () => {
     setSelectedItem(pathname);
   }, [pathname]);
   const menuItems = [
-    { label: "Dashboard", icon: <FaHome />, link: "/admin/dashboard" },
+    { label: "لوحة التحكم", icon: <FaHome />, link: "/admin/dashboard" },
     {
-      label: "Trips",
+      label: "الرحلات",
       icon: <BiSolidCategory />,
       link: "/admin/trips",
     },
     {
-      label: "Hotels",
+      label: "الفنادق",
       icon: <FaHotel />,
       link: "/admin/hotels",
     },
-    { label: "Bookings", icon: <FaBookOpen />, link: "/admin/bookings" },
+    { label: "الحجوزات", icon: <FaBookOpen />, link: "/admin/bookings" },
     {
-      label: "Scrape Data",
+      label: "جمع البيانات",
       icon: <MdOutlineDataUsage />,
       link: "/admin/scrape-data",
     },
@@ -55,9 +55,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="min-h-[100vh]  overflow-hidden">
+    <div className=" fixed top-10 right-3  rounded-lg   h-[85%]  overflow-hidden    scrollbar-hide ">
       <ReactProSidebar
-        className="h-full overflow-hidden"
+        className="  overflow-hidden rounded-lg border-black shadow-lg shadow-black   scrollbar-hide"
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
             backgroundColor: "#ffffff",
@@ -68,16 +68,16 @@ const Sidebar = () => {
         }}
       >
         <Menu
-          className="h-[100vh] max-h-[100vh] text-black overflow-hidden"
+          className="h-[100vh] max-h-[100vh] text-black overflow-hidden rounded-lg"
           menuItemStyles={{
             button: ({ level, active }) => {
               const backgroundColor = level === 0 ? "#ffffff" : "#ffffff";
 
               return {
-                backgroundColor: active ? "#0E1428" : backgroundColor,
+                backgroundColor: active ? "#b7791f" : backgroundColor,
                 color: active ? "#ffffff" : "#000000",
                 "&:hover": {
-                  backgroundColor: active ? "#0E1428" : "#0E1428",
+                  backgroundColor: active ? "#b7791f" : "#b7791f",
                   color: active ? "#ffffff" : "#ffffff",
                 },
               };
@@ -93,8 +93,8 @@ const Sidebar = () => {
               className="cursor-pointer"
               onClick={() => router.push("/admin/dashboard")}
             />
-            <span className="text-3xl uppercase font-medium italic">
-              <span className={ArchitectsDaughter.className}>ARKLYTE</span>
+            <span className="text-3xl uppercase font-medium  mr-5">
+              <span className={ArchitectsDaughter.className}>DIGISTACKS BOOKING</span>
             </span>
           </div>
 
@@ -109,13 +109,13 @@ const Sidebar = () => {
               </MenuItem>
             </React.Fragment>
           ))}
-          <MenuItem
+          {/* <MenuItem
             onClick={() => handleItemClick("/admin/logout")}
             icon={<LuLogOut />}
             active={selectedItem === "/admin/logout"}
           >
             Logout
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </ReactProSidebar>
     </div>

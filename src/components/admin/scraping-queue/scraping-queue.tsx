@@ -19,20 +19,20 @@ const ScrapingQueue = () => {
   }, []);
 
   const onGoingJobColor = () => {
-    if (ongoingJobs <= 5) return "bg-green-500";
+    if (ongoingJobs <= 5) return "bg-[#b7791f]";
     else if (ongoingJobs <= 10) return "bg-orange-500";
     else return "bg-red-500";
   };
 
   const onGoingJobTextColor = () => {
-    if (ongoingJobs <= 5) return "text-green-500";
+    if (ongoingJobs <= 5) return "text-[#b7791f]";
     else if (ongoingJobs <= 10) return "text-orange-500";
     else return "text-red-500";
   };
 
   return (
     <Card className="h-full">
-      <CardHeader>Current Queue</CardHeader>
+      <CardHeader>عمليات الاستخلاص الجاري تنفيذها</CardHeader>
       <CardBody className="flex items-center justify-center">
         <div
           className={`h-52 w-52 ${onGoingJobColor()} rounded-full  flex items-center justify-center`}

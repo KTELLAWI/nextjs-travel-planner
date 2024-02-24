@@ -37,14 +37,14 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
 
           <main className=" flex flex-col  relative">
             {isScraping && <ScrapingLoader />}
-            <Navbar onOpen={onOpen} />
+            {/* <Navbar onOpen={onOpen} /> */}
             <section className=" h-full flex-1 ">{children}</section>
             <AuthModal
               isOpen={isOpen}
               onOpen={onOpen}
               onOpenChange={onOpenChange}
             />
-            <Footer />
+            {/* <Footer /> */}
           </main>
         </div>
       )}

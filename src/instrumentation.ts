@@ -4,6 +4,7 @@ import prisma from "./lib/prisma";
 import { startFlightScraping } from "./scraping/flightsScraping";
 // import { startHotelScraping } from "./scraping/hotelScraping";
 import { apiClient } from "./lib";
+import { trippackages } from "./utils/packages";
 
 // const SBR_WS_ENDPOINT = process.env.SBR_WS_ENDPOINT;
 
@@ -27,7 +28,7 @@ export const register = async () => {
     }
 
     const { Worker } = await import("bullmq");
-     const puppeteer = await import("puppeteer");
+    const puppeteer = await import("puppeteer");
     const { connection } = await import("./lib/redis");
     // const { importQueue } = await import("./lib/queue");
 
@@ -50,133 +51,130 @@ export const register = async () => {
         });
         try {
 
-           const page= await browser.newPage();
+          const page = await browser.newPage();
           console.log("Connected! Navigating to............................................... " + job.data.url);
           //let page = null;
-          const response : any =   await apiClient.post("https://api.apify.com/v2/acts/inhabitable_quack~browser-scrapper/run-sync-get-dataset-items?token=apify_api_xOLQT9CJImG4MMVuPHWVUAZA1EHAGa0BvgY1", {
-            urls: [
-              {
-                  "url": job.data.url
-                 
+          // const response2 : any =   await apiClient.post("https://api.apify.com/v2/acts/inhabitable_quack~browser-scrapper/run-sync-get-dataset-items?token=apify_api_xOLQT9CJImG4MMVuPHWVUAZA1EHAGa0BvgY1", {
+          //   urls: [
+          //     {
+          //         "url": job.data.url
+
+          //     }
+          // ]
+          //  },
+          // ); 
+          const response = trippackages;
+          if (response.packages != null) {
+            if (job.data.jobType.type === "location") {
+              console.log("Connected! Navigating to " + job.data.url);
+              // await page.goto(job.data.url);
+              //console.log("Navigated! Scraping page content...");
+              const details = response?.details;//await startLocationScraping(page);
+              console.log("packages.................");
+              // console.log(packages);
+              await prisma.jobs.update({
+                where: { id: job.data.id },
+                data: { isComplete: true, status: "complete" },
+              });
+              for (const pkg of details) {
+                await prisma.trips.create({ data: pkg });
+                // const jobCreated = await prisma.jobs.findFirst({
+                //   where: {
+                //     url: `https://packages.yatra.com/holidays/intl/details.htm?packageId=${pkg?.id}`,
+                //   },
+                // });
+                // if (!jobCreated) {
+                //   const job = await prisma.jobs.create({
+                //     data: {
+                //       url: `https://packages.yatra.com/holidays/intl/details.htm?packageId=${pkg?.id}`,
+                //       jobType: { type: "package" },
+                //     },
+                //   });
+                //  // importQueue.add("package", { ...job, packageDetails: pkg });
+                // }
               }
-          ]
-           },
-          ); 
-          if (response.packages) {
-            console.log("response.screenshot.................",response.packages)
-           // await page.setContent(response.page.content); //await reconstructPage(response.page);
-          }
-          if (response.packages != null ){
-          if (job.data.jobType.type === "location") {
-            console.log("Connected! Navigating to " + job.data.url);
-           // await page.goto(job.data.url);
-            //console.log("Navigated! Scraping page content...");
-            const details = response.page.details;//await startLocationScraping(page);
-            console.log("packages.................");
-           // console.log(packages);
-            await prisma.jobs.update({
-              where: { id: job.data.id },
-              data: { isComplete: true, status: "complete" },
-            });
-            for (const pkg of details) {
-              await prisma.trips.create({ data: pkg });
-              // const jobCreated = await prisma.jobs.findFirst({
-              //   where: {
-              //     url: `https://packages.yatra.com/holidays/intl/details.htm?packageId=${pkg?.id}`,
-              //   },
-              // });
-              // if (!jobCreated) {
-              //   const job = await prisma.jobs.create({
+            } else if (job.data.jobType.type === "package") {
+              const alreadyScrapped = await prisma.trips.findUnique({
+                where: { id: job.data.packageDetails.id },
+              });
+              if (!alreadyScrapped) {
+                console.log("Connected! Navigating to " + job.data.url);
+
+                //await page.goto(job.data.url, { timeout: 120000 });
+                console.log("Navigated! Scraping page content...");
+                // const pkg = await startPackageScraping(
+                //   page,
+                //   job.data.packageDetails
+                // );
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                await prisma.trips.create({ data: pkg });
+                // await prisma.jobs.update({
+                //   where: { id: job.data.id },
+                //   data: { isComplete: true, status: "complete" },
+                // });
+              }
+            } else if (job.data.jobType.type === "flight") {
+              console.log("in flight scraping");
+              console.log("Connected! Navigating to " + job.data.url);
+              // await page.goto(job.data.url);
+              console.log("Navigated! Scraping page content...");
+              const flights = await startFlightScraping(page);
+
+              await prisma.jobs.update({
+                where: { id: job.data.id },
+                data: { isComplete: true, status: "complete" },
+              });
+
+              for (const flight of flights) {
+                await prisma.flights.create({
+                  data: {
+                    name: flight.airlineName,
+                    logo: flight.airlineLogo,
+                    from: job.data.jobType.source,
+                    to: job.data.jobType.destination,
+                    departureTime: flight.departureTime,
+                    arrivalTime: flight.arrivalTime,
+                    duration: flight.flightDuration,
+                    price: flight.price,
+                    jobId: job.data.id,
+                  },
+                });
+              }
+            } else if (job.data.jobType.type === "hotels") {
+              console.log("Connected! Navigating to " + job.data.url);
+              // await page.goto(job.data.url, { timeout: 120000 });
+              console.log("Navigated! Scraping page content...");
+              // const hotels = await startHotelScraping(
+              //   page,
+              //   browser,
+              //   job.data.location
+              // );
+
+              // console.log(`Scraping Complete, ${hotels.length} hotels found.`);
+
+              await prisma.jobs.update({
+                where: { id: job.data.id },
+                data: { isComplete: true, status: "complete" },
+              });
+
+              console.log("Job Marked as complete.");
+              console.log("Starting Loop for Hotels");
+              // for (const hotel of hotels) {
+              //   await prisma.hotels.create({
               //     data: {
-              //       url: `https://packages.yatra.com/holidays/intl/details.htm?packageId=${pkg?.id}`,
-              //       jobType: { type: "package" },
+              //       name: hotel.title,
+              //       image: hotel.photo,
+              //       price: hotel.price,
+              //       jobId: job.data.id,
+              //       location: job.data.location.toLowerCase(),
               //     },
               //   });
-              //  // importQueue.add("package", { ...job, packageDetails: pkg });
+              //   console.log(`${hotel.title} inserted in DB.`);
               // }
+              console.log("COMPLETE.");
             }
-          } else if (job.data.jobType.type === "package") {
-            const alreadyScrapped = await prisma.trips.findUnique({
-              where: { id: job.data.packageDetails.id },
-            });
-            if (!alreadyScrapped) {
-              console.log("Connected! Navigating to " + job.data.url);
-           
-              //await page.goto(job.data.url, { timeout: 120000 });
-              console.log("Navigated! Scraping page content...");
-              // const pkg = await startPackageScraping(
-              //   page,
-              //   job.data.packageDetails
-              // );
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              await prisma.trips.create({ data: pkg });
-              // await prisma.jobs.update({
-              //   where: { id: job.data.id },
-              //   data: { isComplete: true, status: "complete" },
-              // });
-            }
-          } else if (job.data.jobType.type === "flight") {
-            console.log("in flight scraping");
-            console.log("Connected! Navigating to " + job.data.url);
-           // await page.goto(job.data.url);
-            console.log("Navigated! Scraping page content...");
-            const flights = await startFlightScraping(page);
-
-            await prisma.jobs.update({
-              where: { id: job.data.id },
-              data: { isComplete: true, status: "complete" },
-            });
-
-            for (const flight of flights) {
-              await prisma.flights.create({
-                data: {
-                  name: flight.airlineName,
-                  logo: flight.airlineLogo,
-                  from: job.data.jobType.source,
-                  to: job.data.jobType.destination,
-                  departureTime: flight.departureTime,
-                  arrivalTime: flight.arrivalTime,
-                  duration: flight.flightDuration,
-                  price: flight.price,
-                  jobId: job.data.id,
-                },
-              });
-            }
-          } else if (job.data.jobType.type === "hotels") {
-            console.log("Connected! Navigating to " + job.data.url);
-           // await page.goto(job.data.url, { timeout: 120000 });
-            console.log("Navigated! Scraping page content...");
-            // const hotels = await startHotelScraping(
-            //   page,
-            //   browser,
-            //   job.data.location
-            // );
-
-           // console.log(`Scraping Complete, ${hotels.length} hotels found.`);
-
-            await prisma.jobs.update({
-              where: { id: job.data.id },
-              data: { isComplete: true, status: "complete" },
-            });
-
-            console.log("Job Marked as complete.");
-            console.log("Starting Loop for Hotels");
-            // for (const hotel of hotels) {
-            //   await prisma.hotels.create({
-            //     data: {
-            //       name: hotel.title,
-            //       image: hotel.photo,
-            //       price: hotel.price,
-            //       jobId: job.data.id,
-            //       location: job.data.location.toLowerCase(),
-            //     },
-            //   });
-            //   console.log(`${hotel.title} inserted in DB.`);
-            // }
-            console.log("COMPLETE.");
           }
-        }
         } catch (error) {
           console.log({ error });
           await prisma.jobs.update({
@@ -195,6 +193,6 @@ export const register = async () => {
         removeOnFail: { count: 5000 },
       }
     );
-  
+
   }
 };

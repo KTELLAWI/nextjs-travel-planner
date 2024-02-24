@@ -3,7 +3,7 @@ import React from "react";
 
 const Metrics = ({ title, value }: { title: string; value: number }) => {
   return (
-    <Card className=" bg-opacity-40">
+    <Card className=" bg-white">
       <CardHeader className="text-lg">{title}</CardHeader>
       <CardBody className="text-5xl font-semibold">{value}</CardBody>
     </Card>

@@ -27,11 +27,11 @@ const Dashboard = () => {
   return (
     <section className="m-10 flex flex-col gap-10 ">
       <section className="grid grid-cols-5 gap-5">
-        <Metrics title="Users" value={users} />
-        <Metrics title="Trips" value={trips} />
-        <Metrics title="Flights" value={flights} />
-        <Metrics title="Hotels" value={hotels} />
-        <Metrics title="Bookings" value={bookings} />
+      <Metrics title="المستخدمين" value={users} />
+<Metrics title="الرحلات" value={trips} />
+<Metrics title="الرحلات الجوية" value={flights} />
+<Metrics title="الفنادق" value={hotels} />
+<Metrics title="الحجوزات" value={bookings} />
       </section>
       <section className=" grid grid-cols-6 gap-2">
         <div className="col-span-4">

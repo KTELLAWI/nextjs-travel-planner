@@ -5,10 +5,10 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <section className="bg-[#f5f5fe] flex">
       <Sidebar />
-      <section className="flex-1 flex flex-col">
-        <div className="h-48 bg-[#0E1428] text-white flex justify-center flex-col px-10 gap-3">
-          <h1 className="text-5xl">Bookings</h1>
-          <p>All the bookings by all users.</p>
+      <section className="w-[80%] mr-[20%] flex flex-col">
+        <div className="h-48 bg-[#b7791f] text-white flex justify-center flex-col px-10 gap-3">
+          <h1 className="text-5xl">الحجوزات</h1>
+          <p></p>
         </div>
         {children}
       </section>

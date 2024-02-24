@@ -19,6 +19,7 @@ const config: Config = {
         "dark-red": "#b30054",
         "mid-red": "#d90057",
         "light-red": "#ff005a",
+        "primary":"#b7791f"
       },
     },
   },

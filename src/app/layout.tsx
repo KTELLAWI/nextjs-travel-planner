@@ -9,7 +9,7 @@ import PageLayout from "./PageLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ARKLYTE",
+  title: "digistacks booking",
   description: "Your travel companion",
 };
 
@@ -19,10 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" dir="rtl" className="light">
       <body className={inter.className}>
         <Providers>
-          <PageLayout>{children}</PageLayout>
+          <PageLayout>
+            {children}</PageLayout>
 {/*           <AppProtector />  */}
         </Providers> 
       </body>

@@ -10,10 +10,10 @@ import React from "react";
 const Home = () => {
   return (
     <div className="max-w-[100vw] overflow-x-hidden">
-      <Search />
+      {/* <Search />
       <Featured />
       <Benefits />
-      <Suggestions />
+      <Suggestions /> */}
     </div>
   );
 };
