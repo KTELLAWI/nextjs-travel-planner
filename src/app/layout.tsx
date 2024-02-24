@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "digistacks booking",
-  description: "Your travel companion",
+  description: "",
 };
 
 export default function RootLayout({

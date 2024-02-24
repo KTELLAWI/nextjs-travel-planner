@@ -8,7 +8,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <section className="w-[80%] mr-[20%] flex flex-col">
         <div className="h-48 bg-[#b7791f] text-white flex justify-center flex-col px-10 gap-3">
           <h1 className="text-5xl  font-mono font-extrabold">لوحة التحكم</h1>
-          <p className="font-mono font-extrabold">استخراج بيانات الحجز لشكل ديناميكي</p>
+          {/* <p className="font-mono font-extrabold">استخراج بيانات الحجز ديناميكي</p> */}
         </div>
         {children}
       </section>
