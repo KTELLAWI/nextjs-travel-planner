@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BiSolidCategory } from "react-icons/bi";
 import { FaBookOpen, FaHome, FaHotel } from "react-icons/fa";
-import { LuLogOut } from "react-icons/lu";
+// import { LuLogOut } from "react-icons/lu";
 import { MdOutlineDataUsage } from "react-icons/md";
 import {
   Sidebar as ReactProSidebar,

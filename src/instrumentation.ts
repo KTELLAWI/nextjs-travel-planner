@@ -3,7 +3,7 @@ import prisma from "./lib/prisma";
 // import { startPackageScraping } from "./scraping/packageScraping";
 import { startFlightScraping } from "./scraping/flightsScraping";
 // import { startHotelScraping } from "./scraping/hotelScraping";
-import { apiClient } from "./lib";
+// import { apiClient } from "./lib";
 import { trippackages } from "./utils/packages";
 
 // const SBR_WS_ENDPOINT = process.env.SBR_WS_ENDPOINT;
